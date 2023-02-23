@@ -24,7 +24,6 @@ const DemonstrationHeading: FC<{ className?: string }> = ({className, css}) => {
   </h2>
 };
 
-
 export default function Home() {
   return (
     <>
@@ -80,14 +79,15 @@ export default function Home() {
         </div>
 
         <DemonstrationHeading
-          {...foo}
           css={headingOutsideStyles}
-          // With SWC compiler if the `key` prop is set the `css` prop isn’t
-          // transformed to `className` inside DemonstrationHeading.
+          // With SWC compiler if an object is spread into the component props
+          // AND the `key` prop is set the `css` prop isn’t transformed to
+          // `className` inside `DemonstrationHeading`.
           //
           // With @emotion/babel-plugin (rename .babelrc-disabled to `.babelrc`
           // and restart `next dev` to activate) the `key` prop has no effect on
           // the `css` prop transform.
+          {...{}}
           key={1}
         />
 
