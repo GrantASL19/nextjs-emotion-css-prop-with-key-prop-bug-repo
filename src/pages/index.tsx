@@ -1,9 +1,29 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { css } from '@emotion/react'
+import { FC, memo } from 'react'
 
-const inter = Inter({ subsets: ['latin'] })
+const headingInsideStyles = css({
+  color: "blue",
+})
+
+const headingOutsideStyles = css({
+  color: "red"
+});
+
+// @ts-ignore
+const DemonstrationHeading: FC<{ className?: string }> = ({className, css}) => {
+  console.log(
+    "className should be string and css should be undefined:",
+    {className, css}
+  );
+
+  return <h2 className={className} css={headingInsideStyles}>
+    Should be red because <code>headingOutsideStyles</code> passed to <code>css</code> prop
+  </h2>
+};
+
 
 export default function Home() {
   return (
@@ -59,6 +79,18 @@ export default function Home() {
           </div>
         </div>
 
+        <DemonstrationHeading
+          {...foo}
+          css={headingOutsideStyles}
+          // With SWC compiler if the `key` prop is set the `css` prop isn’t
+          // transformed to `className` inside DemonstrationHeading.
+          //
+          // With @emotion/babel-plugin (rename .babelrc-disabled to `.babelrc`
+          // and restart `next dev` to activate) the `key` prop has no effect on
+          // the `css` prop transform.
+          key={1}
+        />
+
         <div className={styles.grid}>
           <a
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -66,10 +98,10 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <h2 className={inter.className}>
+            <h2>
               Docs <span>-&gt;</span>
             </h2>
-            <p className={inter.className}>
+            <p>
               Find in-depth information about Next.js features and&nbsp;API.
             </p>
           </a>
@@ -80,10 +112,10 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <h2 className={inter.className}>
+            <h2>
               Learn <span>-&gt;</span>
             </h2>
-            <p className={inter.className}>
+            <p>
               Learn about Next.js in an interactive course with&nbsp;quizzes!
             </p>
           </a>
@@ -94,10 +126,10 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <h2 className={inter.className}>
+            <h2>
               Templates <span>-&gt;</span>
             </h2>
-            <p className={inter.className}>
+            <p>
               Discover and deploy boilerplate example Next.js&nbsp;projects.
             </p>
           </a>
@@ -108,10 +140,10 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <h2 className={inter.className}>
+            <h2>
               Deploy <span>-&gt;</span>
             </h2>
-            <p className={inter.className}>
+            <p>
               Instantly deploy your Next.js site to a shareable URL
               with&nbsp;Vercel.
             </p>
